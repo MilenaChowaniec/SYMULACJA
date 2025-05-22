@@ -35,9 +35,9 @@ class Menu:
     
     def _init_sliders(self):
         self.sliders = {
-            "snum": slider.SliderDot('number of sensors', self.screen, 70, '10', '30'),
-            "pnum": slider.SliderDot('number of POIs', self.screen, 170, '10', '30'),
-            "srange": slider.SliderDot('sensors range', self.screen, 270, '150', '300'),
+            "snum": slider.SliderDot('number of sensors', self.screen, 70, '40', '80'),
+            "pnum": slider.SliderDot('number of POIs', self.screen, 170, '10', '20'),
+            "srange": slider.SliderDot('sensors range', self.screen, 270, '200', '300'),
             "sbattery": slider.SliderDot('sensors battery life', self.screen, 370, '30', '160')
         }
 

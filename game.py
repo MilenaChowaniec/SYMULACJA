@@ -1,7 +1,7 @@
 import pygame as p
 from enum import Enum
 import menu
-import simulation
+import simulationInterface as interface
 
 class Size(Enum):
     HEIGHT_OPT = 600
@@ -35,7 +35,7 @@ class Game:
         else:
             self.screen = p.display.set_mode((Size.LENGTH_SIM.value, Size.HEIGHT_SIM.value))
             p.display.set_caption("Simulation")
-            self.scenes[Scene.SIMULATION] = simulation.Simulation(self.screen, self, simulation_settings, Size.LENGTH_SIM.value, Size.HEIGHT_SIM.value)
+            self.scenes[Scene.SIMULATION] = interface.SimulationInterface(self.screen, self, simulation_settings, Size.LENGTH_SIM.value, Size.HEIGHT_SIM.value)
 
         self.curr_scene = scene
 
