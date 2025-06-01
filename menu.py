@@ -15,6 +15,7 @@ class Menu:
 
     def _init_var(self):
         self.GEN_HOVERED = False
+        self.FILE_HOVERED = False
         self.curr_slider = None
         
         self.LINE_LENGTH = 400
@@ -24,6 +25,7 @@ class Menu:
 
     def _init_text(self):
         self.generate = p.font.SysFont('Tahoma', 30).render('GENERATE', True, (0, 0, 0))
+        self.load_file = p.font.SysFont('Tahoma', 30).render('LOAD FROM FILE', True, (0, 0, 0))
 
     def _init_colors(self):
         self.BLACK = (0,0,0)
@@ -32,20 +34,24 @@ class Menu:
 
     def _init_buttons(self):
         self.generate_button = p.Rect(self.screen.get_width() / 2 - self.generate.get_width() / 2 - 10, 500 - 3, self.generate.get_width() + 20, self.generate.get_height() + 6)
+        self.load_file_button = p.Rect(self.screen.get_width() / 2 - self.load_file.get_width() / 2 - 10, 450 - 3, self.load_file.get_width() + 20, self.load_file.get_height() + 6)
     
     def _init_sliders(self):
         self.sliders = {
-            "snum": slider.SliderDot('number of sensors', self.screen, 70, '40', '80'),
+            "snum": slider.SliderDot('number of sensors', self.screen, 70, '60', '120'),
             "pnum": slider.SliderDot('number of POIs', self.screen, 170, '10', '20'),
             "srange": slider.SliderDot('sensors range', self.screen, 270, '200', '300'),
-            "sbattery": slider.SliderDot('sensors battery life', self.screen, 370, '30', '160')
         }
 
     def handle_mouse_hovered(self):
         if self.generate_button.collidepoint(p.mouse.get_pos()): 
             self.GEN_HOVERED = True
+            p.mouse.set_cursor(p.SYSTEM_CURSOR_HAND)       
+        elif self.load_file_button.collidepoint(p.mouse.get_pos()):
+            self.FILE_HOVERED = True
             p.mouse.set_cursor(p.SYSTEM_CURSOR_HAND)
-        else: 
+        else:
+            self.FILE_HOVERED = False
             self.GEN_HOVERED = False
             p.mouse.set_cursor(p.SYSTEM_CURSOR_ARROW)
     
@@ -54,7 +60,6 @@ class Menu:
             if self.generate_button.collidepoint(event.pos):
                 self.settings.set_snum(self.sliders["snum"].get_settings())
                 self.settings.set_pnum(self.sliders["pnum"].get_settings())
-                self.settings.set_sbattery(self.sliders["sbattery"].get_settings())
                 self.settings.set_srange(self.sliders["srange"].get_settings())
                 self.GEN_HOVERED = False
                 p.mouse.set_cursor(p.SYSTEM_CURSOR_ARROW)
@@ -96,11 +101,19 @@ class Menu:
 
 
     def draw(self):
+        # rysowanie generate button
         if self.GEN_HOVERED == True:    
             p.draw.rect(self.screen, self.GREY, self.generate_button)
         self.screen.blit(self.generate, (self.screen.get_width() / 2 - self.generate.get_width() / 2, 500))
         p.draw.rect(self.screen, self.BLACK, (self.screen.get_width() / 2 - self.generate.get_width() / 2 - 10, 500 - 3, self.generate.get_width() + 20, self.generate.get_height() + 6), 1)
-
+        
+        # rysowanie load from file button
+        if self.FILE_HOVERED == True:
+            p.draw.rect(self.screen, self.GREY, self.load_file_button)
+        self.screen.blit(self.load_file, (self.screen.get_width() / 2 - self.load_file.get_width() / 2, 450))
+        p.draw.rect(self.screen, self.BLACK, (self.screen.get_width() / 2 - self.load_file.get_width() / 2 - 10, 450 - 3, self.load_file.get_width() + 20, self.load_file.get_height() + 6), 1)
+        
+        
         for slider in self.sliders:
             self.sliders[slider].draw()
         

@@ -78,6 +78,7 @@ class SimulationInterface:
         self.screen.fill(self.WHITE)
         self.simulation.perform_actions()
         self.draw()
+        self.simulation.draw_stats()
 
     # I TO  
     def update(self):
