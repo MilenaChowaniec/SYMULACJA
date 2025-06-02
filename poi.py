@@ -64,12 +64,6 @@ class Poi:
         color = (153, 100, 153)
         p.draw.rect(self.screen, color, self.dot, 0, border_radius=2)
 
-    def perform_action(self):
-        """
-        Perform visual and logical actions for this POI in one simulation step.
-        """
-        self.draw()
-
     def get_coords(self):
         """
         Get the coordinates of the POI.
