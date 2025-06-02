@@ -2,12 +2,16 @@ import pygame as p
 import random as r
 
 class Poi:
+    """
+    Represents a Point of Interest (POI) in the sensor network simulation.
+    Each POI can generate data and be observed by a sensor.
+    """
     def __init__(self, coords: tuple, screen):
         """
-        Initialize a Point of Interest (POI) object.
+        Initializes the POI at given coordinates.
 
-        :param coords: Tuple containing the (x, y) coordinates of the POI.
-        :param screen: Pygame screen where the POI will be drawn.
+        :param coords: Tuple of (x, y) screen coordinates.
+        :param screen: Pygame surface for rendering.
         """
         self.coords = coords
         self.screen = screen
@@ -15,9 +19,7 @@ class Poi:
         self._init_shapes()
 
     def _init_var(self):
-        """
-        Initialize POI internal variables.
-        """
+        """Initializes POI variables such as data, size, and reliability."""
         self.DOT_SIZE = 10 # Size of the POI dot on the screen
         self.observed_by = None # Sensor currently observing this POI (if any)
 
@@ -26,17 +28,15 @@ class Poi:
         self.reliability = r.uniform(0.8, 1.0)   # Random reliability score between 0.8 and 1.0
 
     def _init_shapes(self):
-        """
-        Initialize graphical representation of the POI.
-        """
+        """Initializes the visual representation (rectangle) of the POI."""
         x, y = self.coords
         self.dot = p.Rect(x, y, self.DOT_SIZE, self.DOT_SIZE)
     
     def generate_data(self, prob):
         """
-        Generate a data packet with a given probability.
+        Simulates data generation based on a probability threshold.
 
-        :param prob: Probability of generating data at this time step.
+        :param prob: Float in [0, 1] indicating the chance of data generation.
         """
         if r.random() < prob:
             measurement = {
@@ -49,25 +49,23 @@ class Poi:
 
     def release_data(self):
         """
-        Release all buffered data packets and clear the buffer.
+        Releases all stored data packets and clears the buffer.
 
-        :return: List of data packets.
+        :return: List of generated data packets.
         """
         packets = self.buffer.copy()
         self.buffer.clear()
         return packets
 
     def draw(self):
-        """
-        Draw the POI on the screen.
-        """
+        """Draws the POI as a small purple square on the screen."""
         color = (153, 100, 153)
         p.draw.rect(self.screen, color, self.dot, 0, border_radius=2)
 
     def get_coords(self):
         """
-        Get the coordinates of the POI.
+        Returns the (x, y) coordinates of the POI.
 
-        :return: Tuple (x, y) representing the POI position.
+        :return: Tuple with POI coordinates.
         """
         return self.coords

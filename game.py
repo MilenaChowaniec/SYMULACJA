@@ -16,9 +16,12 @@ class Scene(Enum):
     SIMULATION = 2  # Simulation scene
 
 class Game:
+    """
+    Main game class that handles scene management, event polling, and game loop.
+    """
     def __init__(self):
         """
-        Initialize the Game object, including pygame, screen, and scenes.
+        Initializes the game by setting up the window and the initial scene.
         """
         p.init()
         self.screen = p.display.set_mode((Size.LENGTH_OPT.value, Size.HEIGHT_OPT.value))
@@ -27,9 +30,9 @@ class Game:
 
     def _init_scenes(self):
         """
-        Initialize the available scenes and set the current scene to MENU.
+        Initializes available scenes and sets the current scene to the menu.
         """
-        self.curr_scene = Scene.MENU
+        self.curr_scene = Scene.MENU # Start with the menu scene
         self.menu = menu.Menu(self.screen, self)
 
         self.scenes = {
@@ -39,10 +42,10 @@ class Game:
 
     def change_scene(self, scene: Scene, simulation_settings = None):
         """
-        Change the current scene (menu <-> simulation), updating the screen size and title.
+        Changes the current scene to the given one. Dynamically loads simulation if needed.
 
-        :param scene: The target scene to switch to (Scene Enum).
-        :param simulation_settings: Optional settings to pass to the simulation interface.
+        :param scene: Scene to switch to
+        :param simulation_settings: Optional settings for simulation scene
         """
         if scene == Scene.MENU:
             self.screen = p.display.set_mode((Size.LENGTH_OPT.value, Size.HEIGHT_OPT.value))
@@ -57,17 +60,17 @@ class Game:
 
     def _poll_events(self):
         """
-        Poll and dispatch pygame events to the current scene's handler.
+        Polls all Pygame events and delegates them to the current scene for handling.
         """
         for event in p.event.get():
             self.scenes[self.curr_scene].handle_event(event)
 
     def play(self):
         """
-        Main game loop: process events, render the current scene, and update logic.
+        Starts the main game loop. Continuously polls events, updates, and renders the current scene.
         """
         while True:
-            self._poll_events()
+            self._poll_events() # Handle input/events
             self.scenes[self.curr_scene].render()
             self.scenes[self.curr_scene].update()
     

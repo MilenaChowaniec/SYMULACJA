@@ -1,12 +1,4 @@
 class SimulationSettings:
-    """
-    A configuration class for simulation parameters.
-
-    This class encapsulates the basic settings of a sensor network simulation,
-    including the number of sensors, number of points of interest (POIs),
-    and the sensing range of each sensor. It provides setter and getter methods
-    to allow easy access and modification of these parameters.
-    """
     def __init__(self):
         self.sensors_num = 0
         self.poi_num = 0
