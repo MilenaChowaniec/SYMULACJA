@@ -1,5 +1,8 @@
 class SimulationSettings:
     def __init__(self):
+        """
+        Initialize simulation settings with default values.
+        """
         self.sensors_num = 0
         self.poi_num = 0
         self.sensors_range = 0

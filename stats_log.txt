@@ -1,0 +1,8 @@
+Average battery level: 52.0%
+Active sensors: 14
+Sleeping sensors: 49
+Dead sensors: 26
+Packets in the network: 853
+Packets at the central node: 536
+Lost packets: 172
+Failed sensors: 1
